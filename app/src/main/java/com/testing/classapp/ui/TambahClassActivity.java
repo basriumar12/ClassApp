@@ -47,12 +47,9 @@ public class TambahClassActivity extends AppCompatActivity {
     @OnClick(R.id.btnSimpan)
     public void onViewClicked() {
 
-        getData();
         saveData();
         clearData();
 
-
-        finish();
     }
 
     private void clearData() {
@@ -62,24 +59,21 @@ public class TambahClassActivity extends AppCompatActivity {
 
     private void saveData() {
 
-        // Membuat object KelasModel untuk menampung data
         ClassModel classModel = new ClassModel();
-
-        // Memasukkan data ke dalam KelasModel
         classModel.setNama_kelas(namaKelas);
         classModel.setNama_wali(namaWali);
-         if (namaKelas.isEmpty() || namaWali.isEmpty()){
-             Toast.makeText(this, "Field tidak bisa kosong", Toast.LENGTH_SHORT).show();
-         }   else
-        // Perintah untuk melakukan operasi Insert menggunakan siswaDatabase
-        classDatabase.kelasDao().insert(classModel);
-        Toast.makeText(this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
-    }
-
-    private void getData() {
         namaKelas = edtNamaKelas.getText().toString();
         namaWali = edtNamaWali.getText().toString();
+         if (namaKelas.isEmpty() || namaWali.isEmpty()){
+             Toast.makeText(this, "Field tidak bisa kosong", Toast.LENGTH_SHORT).show();
+         }   else {
+             // Perintah untuk melakukan operasi Insert menggunakan siswaDatabase
+             classDatabase.kelasDao().insert(classModel);
+             Toast.makeText(this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
+             finish();
+         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
